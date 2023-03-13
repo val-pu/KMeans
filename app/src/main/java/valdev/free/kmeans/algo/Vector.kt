@@ -1,5 +1,6 @@
 package valdev.free.kmeans.algo
 
+import android.util.Log
 import java.util.*
 import kotlin.math.sqrt
 import kotlin.random.Random
@@ -42,9 +43,12 @@ class Vector(val dimension: Int, vararg initialValues: Double) {
     fun abs(): Double {
         var result = 0.0
         contents.forEach { x ->
-            result += x*x
+            result += x * x
         }
         return sqrt(result)
     }
 
+    override fun toString(): String {
+        return contents.contentToString()
+    }
 }

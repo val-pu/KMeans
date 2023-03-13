@@ -1,5 +1,6 @@
 package valdev.free.kmeans.algo
 
+import android.util.Log
 import java.util.LinkedList
 
 object KMeansAlgorithm {
@@ -8,14 +9,15 @@ object KMeansAlgorithm {
         n: Int,
         dataSet: LinkedList<Vector>,
         dimension: Int,
-        iterations: Int = 1
+        iterations: Int = 3
     ): Array<Cluster> {
+
+        var index = 0;
+
         val cluster = Array(n) {
+            val contents = dataSet.random().contents
             Cluster(
-                Vector(
-                    dimension,
-                    *dataSet.random().contents
-                )
+                dataSet[++index]
             )
         }
 
@@ -24,21 +26,23 @@ object KMeansAlgorithm {
 
             dataSet.forEach { currentDataPoint ->
                 var closestCluster: Cluster? = null
-                var closestClusterDistance = Double.MAX_VALUE
+                var closestClusterDistance = 10000000.0
 
                 repeat(n) { i ->
                     val currentClusterCentre = cluster[i].centerPoint
 
                     val distance = currentClusterCentre.distance(currentDataPoint)
 
+
                     if (distance < closestClusterDistance) {
+
 
                         closestClusterDistance = distance
                         closestCluster = cluster[i]
                     }
                 }
 
-                closestCluster?.dataPoints?.add(currentDataPoint)
+                closestCluster!!.dataPoints?.add(currentDataPoint)
             }
 
         }
